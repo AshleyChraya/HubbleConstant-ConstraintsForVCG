@@ -1,0 +1,23 @@
+\newgeometry{left=1.3cm,right=1.3cm, top=4cm}
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+\begin{teammates}
+\vspace*{-3mm}{\textcolor{white}{Team}}
+    \large{\begin{enumerate}
+    \item {}$^\mathsection{}^\dagger$Name 1, Department, University
+    \item {}$^\dagger$Name 2, Department, University
+    \item {}$^\dagger{}^\mathsection$Name 3, Department, University
+    \item {}$^\mathsection$Name 4, Department, University
+    \item {}$^\mathsection$Name 5, Department, University
+    \item {}$^\dagger$Name 6, Department, University
+    \item {}$^\dagger$Name 7, Department, University
+    \item {}$^\dagger{}^\mathsection$Name 8, Department, University
+    \end{enumerate}}
+\blfootnote{$\dagger \;\;$ Task 1 (example - Theoretical and Mathematical Analysis)}
+\blfootnote{$\mathsection \;\;$ Task 2 (example - Data Collection and Analysis)}
+\end{teammates}
+\restoregeometry

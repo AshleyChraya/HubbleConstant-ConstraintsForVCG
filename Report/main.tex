@@ -1,0 +1,101 @@
+\RequirePackage[l2tabu, orthodox]{nag} % tells you of any bad LaTeX usage
+                                       % must be first thing in class (with the exception of comments)
+
+%% There is one option you should define; oneside or twoside
+%% Use twoside for your viva docs (examiners hate long docs they need to carry around)
+%% and oneside for the final thing you submit to the library.  Note that margins will
+%% change accordingly
+
+\documentclass[oneside]{um}  % custom University of Malta project/dissertation/thesis 
+
+
+%% **************** (Your) Packages (Start) ******************
+
+% \listfiles % uncomment this to know which packages you are using
+              % the list of packages will be in the bottom of the .log file
+
+%% Note that packges may already be loaded from the um (and memoir) classes.
+%% Do not add your packages to the template, but rather add them here.
+\usepackage{subfigure}
+\usepackage{subcaption}
+\usepackage{pythontex}
+\usepackage{blindtext} %% for some dummy text, remove in your writeup
+
+%% ***************** (Your) Packages (End) *******************
+
+
+%% **************** (Your) Data (Start) ******************
+
+\title{Constraints on VCG Model \\from GW Merger Events}  % use \\ here otherwise you get a justified title
+                                                    % note capitalization of the title (only common 
+                                                    % words in lower case)
+%\tagline{Team Exouls}                     % tag line
+\author{Astrophysics- B2}                           % your name
+\authorID{123456M}                           % your University Identifier
+\supervisor{Dr. Geetanjali Sethi}                             % your supervisor(s) name - no . in Dr
+ 
+                                                    % simply comment out the above line if absent
+\department{Astronomy and Astrophysics}                  % your department (e.g. Artifical Intelligence)
+\faculty{Research Fellowship Program}                      % your faculty (e.g. ICT)
+\degree{research fellowship}                      % the degree you are reading
+                                                    % note the \ after the dot, so not to consider it a fullstop
+\doctype{project report}                              % the type of document (fyp, dissertation, thesis)
+\degreedate{\today}                        % when did you submit -- officially after your corrections !
+%%\subjectcode{ICS5200}                               % the study unit-code (currently not used)
+
+%% ***************** (Your) Data (End) *******************
+
+
+%% ******** (Your) Document Settings (Start) *************
+
+% You should have an images directory in every chapX subdirj
+% NOTE:  Trailing / for subdirs is required.
+\graphicspath{{./images/}{./chap1/images/}}   % Paths where to look for images, if defined "images" must always be there as it holds the images in-use by the template.
+
+\makeindex
+
+%% ********* (Your) Document Settings (End) **************
+
+\begin{document}
+\frontmatter 
+    \maketitle       
+    \input{frontmatter/dedication}        % include a dedication.tex file
+    \input{frontmatter/teammates}\if@openright\cleardoublepage\else\clearpage\fi
+    \input{frontmatter/acknowledgements}   % include an acknowledgements.tex file
+    \input{frontmatter/abstract}\if@openright\cleardoublepage\else\clearpage\fi
+    \newgeometry{left=3cm,right=3cm}
+    \tableofcontents*\if@openright\cleardoublepage\else\clearpage\fi
+    \listoffigures*\clearpage
+    \listoftables*\clearpage
+    %\lstlistoflistings*\clearpage
+    %\input{frontmatter/abbreviations}\clearpage\fi
+
+%% Note: always use \input as you cannot nest \includes (amongst other things)
+\pagestyle{umpage}
+\mainmatter 
+    \newgeometry{top=3.8cm,bottom=3.8cm,left=2.5cm,right=2.5cm}
+    \input{chap1/introduction} 
+    \input{chap2/backgroundlit}
+    \input{chap3/methodology}
+    \input{chap4/results}
+    \input{chap5/disconclusion}
+    \input{chap6/futurework}
+    \restoregeometry
+    \newgeometry{top=3.8cm,bottom=3.8cm,left=2.2cm,right=2.2cm}
+    \appendix
+        \input{appA/appendix_a_main}     % these are just test names as I didn't know what you'd want
+        \input{appB/appendix_b_main}    
+        \input{appC/appendix_c_main} 
+    
+    
+{\backmatter
+    % Bibliography
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \bibliographystyle{um-plainnat} %% specific plainnat does not show url for articles
+    {\footnotesize\bibliography{background_and_lit_overview_biblio.bib}}
+	\printindex
+}\restoregeometry
+
+\end{document}
+
+%%% The End %%%
