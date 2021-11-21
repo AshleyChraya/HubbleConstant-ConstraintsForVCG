@@ -4,3 +4,6 @@
 [submodule "Report"]
 	path = Report
 	url = https://git.overleaf.com/6138c6507f9951378ccd276d
+[submodule "Report_VCG"]
+	path = Report_VCG
+	url = https://github.com/AshleyChraya/Report_VCG.git
