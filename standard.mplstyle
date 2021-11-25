@@ -1,0 +1,30 @@
+#axes.titlesize : 24
+#axes.labelsize : 20
+#lines.linewidth : 3
+axes.linewidth: 3.5
+#lines.markersize : 6
+legend.loc:           best
+xtick.bottom:        True    # draw ticks on the bottom side
+xtick.labelbottom:   True    # draw label on the bottom
+xtick.color:         black   # color of the ticks
+grid.linestyle: -       # solid
+xtick.major.size:    9   # major tick size in points
+xtick.minor.size:    6     # minor tick size in points
+xtick.major.width:   1.5   # major tick width in points
+xtick.minor.width:   1    # minor tick width in points
+xtick.minor.visible: True
+xtick.direction:     in
+xtick.top : True
+ytick.major.size:    9     # major tick size in points
+ytick.minor.size:    6     # minor tick size in points
+ytick.major.width:   1.5  # major tick width in points
+ytick.minor.width:   1    # minor tick width in points
+ytick.minor.visible: True
+ytick.direction:     in
+ytick.right : True
+figure.figsize:     10,8
+text.usetex:   True
+font.size: 20
+font.family: Times
+
+
