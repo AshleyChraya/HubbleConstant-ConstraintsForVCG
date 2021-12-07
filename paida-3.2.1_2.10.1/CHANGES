@@ -1,0 +1,484 @@
+[3.2.1_2.10] (AIDA3.2.1_PAIDA2.10)
+
+    ### Changes ###
+
+    - Changed the GUI engine selection option syntax from "-gui" to "--gui". [#1619652]
+      Then now supports the conventional GNU/POSIX syntax and you can use the optparse module with PAIDA.
+        python yourscript --gui=batch
+        python yourscript --gui bath
+
+    ### New features ###
+
+    - Greatly improved speed and memory performance in reading AIDA XML data file. [#1577970] (Thanks to Jan.)
+    - Keyword arguments support in ITreeFactory.create(). [#1651112] (Thanks to Jan.)
+        - ITreeFactory(storeName='', storeType='xml', readOnly=False, createNew=True, options=None)
+    - 'hit' plotting format in histogram2D displays a box if the bin entry is not zero.
+    - New cold-to-hot color mapper in plotting. [#1515933] (Thanks to Andreas.)
+        - Now this color mapper is used by default in:
+        - 'bar', 'box', 'elliple' and 'hit' format in histogram2D
+        - 'scatterColorIndexed' format in cloud2D
+        - 'scatterColorIndexed' format in dataPointSet2D
+        - function2D
+        - profile2D
+        - histogram3D
+    - Support for Numpy/Scipy arrays as method argumens [#1646244]:
+        - ICloudxD.convert
+        - IDataPointSetFactory.createX
+        - IDataPointSetFactory.createY
+        - IDataPointSetFactory.createXY
+        - IDataPointSetFactory.createXYZ
+        - IFitData.createConnection
+        - IFitter.fit
+        - IHistogramFactory.createHistogram1D
+        - IHistogramFactory.createHistogram2D
+        - IHistogramFactory.createHistogram3D
+        - IHistogramFactory.createProfile1D
+        - IHistogramFactory.createProfile2D
+        - ITupleFactory.create
+
+    ### Bug fixes ###
+
+    - Improved compatibility with JAIDA's output file. [#1573428] (Thanks to Jan.)
+    - Histogram2D plotting in box or ellipse format with log scaling of z axis was not correct in some special cases.
+    - Plotting with Z-axis in log scaling showed incorrect tick line positions.
+    - IEvaluator didn't understand some math functions. [#1625206]
+
+
+[3.2.1_2.9] (AIDA3.2.1_PAIDA2.9)
+
+    ### New features ###
+
+    - Simple matrix calculation
+    - 3D rotated plot
+    - Chi2 fitting with asymmetric weight
+    - Tick line controll
+    - Improved IPython support (And both Tcl/Tk and Tkinter should be configured with pthread-enabled if you use Tkinter plotting engine.)
+
+    ### Bug fixes ###
+
+    - scale() didn't calculate errors correctly.
+
+
+[3.2.1_2.8.1] (AIDA3.2.1_PAIDA2.8.1)
+
+    ### Bug fixes ###
+    
+    - Corrected isinstance() in PAbsorber for Jython users.
+
+
+[3.2.1_2.8] (AIDA3.2.1_PAIDA2.8)
+
+    ### New features ###
+
+    - Now PAIDA works on JAVA with Jython2.1 (Python in JAVA).
+        - of course still works with Python.
+        - uses Swing for the GUI engine.
+        - Now you can use large number of extension libraries of not only Python but also Java.
+    - Improved IFitter.
+        - New fitting engine "GA" and "SimpleGA" are available. They use "Genetic Algorithm" and is very slow but strong.
+        - "PAIDA" and "SimplePAIDA" fitting engines got more optimized speed.
+    - Support for 'dot', 'dash', 'dash-dot' and 'dash-dot-dot' line type in addition to 'solid'.
+
+    ### Changes ###
+
+    - IFitResult.fitStatus():
+        # 0: All ok.
+        # 1: The solution and parabolic error are found, but asymmetric error is invalid.
+        # 2: The solution is found, but parabolic and asymmetric errors are invalid.
+        # -1: All failed.
+
+    ### Bug fixes ###
+
+    - Axis bins were not created correctly when (number of bins) > (int axis max - int axis min) e.g. 50 bins in [0, 10] axis range.
+    - Histogram2D overlay plotting in box or ellipse format was incorrect.
+    - HistogramFactory.projectionY() did not work correctly.
+    - Auto plotting range adjustment did not work correctly.
+    - Auto tick label calculation did not work correctly.
+    - Overlaying function plotting caused incorrect axis range.
+    - IPlotter.destroyRegions() did not clear statistics/legend/text box.
+    - Plotting with triangle markers caused an exception.
+    - Corrected from sum(sequence) to sum(sequence, start=0) in PAbsorber.
+    - ICloud1/2/3D output <entries1/2/3d> in a XML file even when already converted to a histogram.
+
+
+[3.2.1_2.7] (AIDA3.2.1_PAIDA2.7)
+
+    ### New features ###
+
+    - Improved speed of ITuple.
+    - Auto sizing if not customized:
+        - axis/tick/title label
+        - stats/legends/texts box
+    - Support for new function names:
+        - 'GG' for double gaussian ('G+G' in PAW)
+        - 'EE' for double exponential ('E+E' in PAW)
+
+    ### Bug fixes ###
+
+    - ITupleFactory
+        - createFiltered() did not work correctly.
+        - createChained() did not work correctly.
+    - ITuple
+        - project() did not work correctly.
+        - rows() returned -1 even when there were no rows.
+    - XML data file:
+        - Reading/Writing XML data file which includes complex ITuples works correctly now.
+        - Characters '&', '<', '>', '"' were not escaped correctly in XML data file.
+    - Memory:
+        - Closed tree did not free the memory space.
+        - Closed plotter did not free the memory space.
+    - Grid lines did not be plotted correctly.
+
+
+[3.2.1_2.6.1] (AIDA3.2.1_PAIDA2.6.1)
+
+    ### Bug fixes ###
+    
+    - Log scale plotting sometimes raised an exception.
+    - Weighted filling caused incorrect statistics.
+    - Multiplication/Division of histograms caused incorrect statistics.
+    - Now will give up reading broken XML data file.
+
+
+[3.2.1_2.6] (AIDA3.2.1_PAIDA2.6)
+
+    ### New features ###
+
+    - When overlay plotting, if the plotterStyle is not customized:
+        - auto re-scaling
+        - auto line coloring
+        - auto marker shaping
+        - auto legends
+    - Optimization of XML data file reading/writing.
+    - Support for both EPS and PS output:
+        - EPS: only single page but with paper size data
+        - PS: multiple pages but without paper size data
+    - Reconsidered statictics calculation.
+    - New paida.tools.TupleString module which makes it easy to create a complex ITuple.
+
+[3.2.1_2.5] (AIDA3.2.1_PAIDA2.5)
+
+    ### New features ###
+
+    - The process of creating histograms is optimized. This will lead to the saving of CPU and memory resources.
+    - Int type arguments for axis edges are now acceptable in .createHistogram*D() and .createProfile*D().
+
+    ### Bug fixes ###
+
+    - tree.setOverwrite() did not work properly.
+    - annotation.reset() displayed an exception message.
+
+
+[3.2.1_2.4] (AIDA3.2.1_PAIDA2.4)
+
+    ### New features ###
+
+    - The tkinter module is no longer required.
+        -- New plotting engine 'batch' was added and it plots nothing. (batch mode)
+        -- If you don't have tkinter module, PAIDA always selects this engine automatically.
+        -- You can select this engine by starting Python with '-guibatch' argument like 'python sample.py -guibatch'.
+    - The zlib module is no longer required.
+        -- If you don't have zlib module, PAIDA always treat XML store files as unzipped automatically.
+    - Now you can control the plotter region fill and line color and the default is transparent.
+
+    ### Bug fixes ###
+
+    - Reading cloud1D data from XML file raised an exception.
+    - tree.mkdirs() did not work properly.
+
+
+[3.2.1_2.3.1] (AIDA3.2.1_PAIDA2.3.1)
+
+    ### Bug fixes ###
+    
+    - XML storage file
+        - The attempt to read weightedRmsX, weightedRmsY and weightedRmsZ were still made.
+        - Creating a ITuple object with at least one negative default value raised an exception.
+        - The string type column was expressed as not 'string' but 'String'.
+        - Reading a column name with no default value like 'momentum=' raised an exception.
+        - Unnecessary tree window was opened when the XML file has ITuple data.
+        - The tree window did not disappear when closed.
+
+
+[3.2.1_2.3] (AIDA3.2.1_PAIDA2.3)
+
+    ### New features ###
+
+    - Now works correctly on Windows platform.
+    - Simple texts box for info.addText() is supported.
+    - More faster on plotter.writeToFile() on MacOSX platform.
+    - Experimental support for time scaled axis.
+    - New faster fitting engine "simplePAIDA" which calculates only parabolic error. (not both parabolic and asymmetric errors.)
+
+    ### Bug fixes ###
+
+    - Old legends were always replaced by new legend.
+    - Overlay plotting didn't work properly. (Histogram2D, Cloud2D, Profile2D, DataPointSet2D, Cloud3D and DataPointSet3D)
+    - Plotting histogram1D or cloud1D with histogram format option was incorrect when the minimum X axis value is larger than 0.0.
+    - "weightedRms" of each bin of histograms is omitted in the exported XML file.
+    - Plotting objects which has zero entries raised an exception.
+    - Improved support for GUI threading.
+    - Reading <!DOCTYPE> line in a XML file raised an exception if you have no internet connection.
+
+
+[3.2.1_2.2.1] (AIDA3.2.1_PAIDA2.2.1)
+    This is the bug fix release.
+
+    ### Bug fixes ###
+
+    - A tree did not export dataPointSet objects correctly to a XML file.
+    - A tree did not import dataPointSet objects correctly from a XML file.
+
+
+[3.2.1_2.2] (AIDA3.2.1_PAIDA2.2)
+
+    ### New features ###
+
+    - Now PAIDA can plot all types of AIDA objects including 3D histogram, cloud and dataPointSet.
+    - More precise and the same position control on various platforms.
+    - Simple tree window.
+    - Transparent color is supported. Setting color to "" will select this behavior.
+
+    ### Bug fixes ###
+
+    - The output postscript file is more precise now.
+    - PAIDA attempts the default font to be set to "Courier".
+    - Profile2D was not created correctly.
+    - .binEntriesX() etc. in histogram2D, histogram3D and profile2D raised an exception.
+    - .fill() in histogram3D raised an exception.
+    - .createCopy() in histogramFactory raised an exception.
+    - .symlink() in tree raised an exception.
+
+
+[3.2.1_2.1.1] (AIDA3.2.1_PAIDA2.1.1)
+
+    ###General###
+    
+    This is the bug fix release.
+        - The tick line length was sometimes zero.
+        
+    ### Installation Note ###
+
+    Tix extension etc. do not be needed to enable Tkinter for PAIDA. X11 and Tcl/Tk only.
+
+
+[3.2.1_2.1] (AIDA3.2.1_PAIDA2.1)
+
+    ###General###
+    
+    Python2.3 or later with zlib and Tkinter modules enabled is required.
+
+    Please refer to http://paida.sourceforge.net/ about more information.
+
+    ###Plotter###
+
+    .show() / .hide() is now working as expected. (no longer shrinks in size)
+    
+    New support for 2d histogram and cloud. (ellipse/box and scatter respectively)
+        histogram1D, histogram2D
+        profile1D
+        cloud1D, cloud2D
+        dataPointSet (dimension=1,2)
+        function (dimension=1)
+        
+    ###PlotterStyle###
+    
+    New parameters
+        hist2DStyle     ['box', 'ellipse'] ('box')
+        
+    ###AxisStyle###
+    
+    New parameters
+        grid            ['True', 'False', 'true', 'false'] ('False')
+        gridSub         ['True', 'False', 'true', 'false'] ('False')
+        
+    ###Bug fixes###
+
+    Fixed "Calling Tcl from different appartment" problem. This was caused by threads-enabled Tcl.
+
+
+[3.2.1_2.0]
+
+    ###General###
+
+    Now PAIDA is a pure python package!
+    and should run on any platform Python works!
+    This means PAIDA has very high portability and extendability. (but off course relatively slow)
+
+    This feature is results of
+        partial replacement of Fortran's "lapack/blas" with pure python
+        pure python modules for automatic analytical differentiation
+        pure python modules for optimization and error estimation (like CERN's MINUIT)
+
+    ###Function###
+
+    Supported arithmetics.
+        +, -, *, /, **, sin, cos, tan, exp, log
+        You can create any function by using these arithmetics.
+
+    Supported constants.
+        e, pi
+        You can create any function by using these constants.
+
+    You can re-use any created function in createFunctionByName() and createFunctionFromScript() by cataloging.
+    
+    Function gradient expression is ignored because PAIDA fitting engine needs hessian (not only gradient) and calculates it automaticaly.
+
+    ###Fitter###
+
+    Supported fitting engine is
+        'PAIDA'
+            The new pure python fitting engine and calculates optimized parameters and their parabolic/asymmetric errors more precisely.
+    
+    You can set parameter constraints more freely like "a = 2 * b + exp(c / d)". Supported arithmetics and constants are the same as IFuntion.
+
+    Supported fit methods are
+        'LeastSquares'
+            uses all in range data
+        'Chi2'
+            for eachBin in allBins:
+                if [has bin error data]:
+                    if [bin error is 0.0]:
+                        if [bin weight > 0.0]:
+                            [use bin weight as square of bin error]
+                        else:
+                            [exclude]
+                    else:
+                        [use bin error]
+                else:
+                    if [bin weight > 0.0]:
+                        [use bin weight as square of bin error]
+                    else:
+                        [exclude]
+        'CleverChi2'
+            if [bin weight is 0.0]
+                [exclude]
+            else
+                [use bin weight as square of bin error]
+        'BinnedMaximumLikelihood'
+            uses all in range data
+        'UnbinnedMaximumLikelihood'
+            uses all in range data (fitting function must be normalized)
+            
+    'stepSize' parameterSetting is not implemented.
+
+    ###Tuple###
+
+    Chained and complex tuples are suppored.
+
+    ###Plotter###
+
+    Now Tkinter based plotting engine. (You must enable Tkinter module.)
+
+    Currently PAIDA can plot
+        histogram1D
+        cloud1D
+        profile1D
+        dataPointSet (1D, 2D)
+        function (1D)
+        (I'm planning PAIDA to be able to plot 2D histograms in the next release.)
+
+    IPlotter has some parameters.
+        paper           The size (width and height) of the plotting area by paper sizes. ['A0', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'B0', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'Letter', 'Legal', 'Tabloid', 'Hagaki'] (default: 'A5')
+        landscape       ['True', 'False', 'true', 'false'] ('True')
+        width           The width of the plotting area. (default: paper size's width)
+                    '10'    10 pixels
+                    '10c'   10 centimeters
+                    '10i'   10 inches
+                    '10m'   10 millimeters
+                    '10p'   10 printer's points (1p = 1i/72.27)
+        height          The height of the plotting area. (paper size's height)
+        viewWidth       The width of the view area. (the same as width)
+        viewHeight      The height of the view area. (the same as height)
+
+    .hide() method does not close the window but shrinks it in size.
+
+    IPlotterLayout
+        statisticsBoxAnchor     ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] ('NE')
+        statisticsBoxOffsetX    X offset from anchor position. ('0p')
+        statisticsBoxOffsetY    Y offset from anchor position. ('0p')
+        legendBoxAnchor         ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] ('NW')
+        legendBoxOffsetX        X offset from anchor position. ('0p')
+        legendBoxOffsetY        Y offset from anchor position. ('0p')
+        
+    IInfo
+        addText() is not implemented. I don't know yet how it should work.
+
+    ###Style###
+
+    AIDA style interfaces are fully implemented.
+
+    IAxisStyle
+        label   Any string. ('')
+        scale   ['log', 'lin', 'logarithmic', 'linear'] ('lin')
+        type    ['double', 'int'] ('double')
+
+    IBrushStyle
+        .availableColors()      #rgb, #rrggbb, #rrrgggbbb, #rrrrggggbbbb or ['red', 'green', 'blue', 'cyan', 'magenta', 'yellow', 'black', 'white'] ('black')
+        opacity                 This can be set but takes no effect.
+
+    IDataStyle
+        showHistogramBars       ['True', 'False', 'true', 'false'] ('False')
+        fillHistogramBars       ['True', 'False', 'true', 'false'] ('False')
+        showErrorBars           ['True', 'False', 'true', 'false'] ('False')
+        errorBarsColor          #rgb, #rrggbb, #rrrgggbbb, #rrrrggggbbbb or ['red', 'green', 'blue', 'cyan', 'magenta', 'yellow', 'black', 'white'] ('black')
+        errorBarsPoint          ['center', 'mean'] ('center')
+        showDataPoints          ['True', 'False', 'true', 'false'] ('False')
+
+    IFillStyle
+        .availablePatterns()    ['flat'] ('flat')
+
+    IInfoStyle
+        You can set the follwing styles in addition to ITextStyle.
+            lineStyle       via paida_lineStyle() / paida_setLineStyle()
+            fillStyle       via paida_fillStyle() / paida_setFillStyle()
+
+    ILineStyle
+        .availableLineTypes()   ['solid'] ('solid')
+
+    IMarkerStyle
+        size                    The marker size. ('8p')
+        .availableShapes()      ['circle'] ('circle')
+
+    IPlotterStyle
+        showTitle               ['True', 'False', 'true', 'false'] ('False')
+        showStatisticsBox       ['True', 'False', 'true', 'false'] ('False')
+        showLegendBox           ['True', 'False', 'true', 'false'] ('False')
+        backgroundColor         #rgb, #rrggbb, #rrrgggbbb, #rrrrggggbbbb or ['red', 'green', 'blue', 'cyan', 'magenta', 'yellow', 'black', 'white'] ('white')
+
+    ITextStyle
+        .availableFonts()       Available font names.
+        fontSize                The font size. Its positive/negative value means point/pixel unit respectively. (12.0)
+        bold                    ['True', 'False', 'true', 'false'] ('False')
+        italic                  ['True', 'False', 'true', 'false'] ('False')
+        underlined              ['True', 'False', 'true', 'false'] ('False')
+
+    ITitleStyle
+
+
+[3.2.1b1]
+
+    [General]
+
+    Updated to AIDA3.2.1 interfaces.
+
+    [Fitting]
+
+    When histogram fitting PAIDA used bin centers, but now uses bin means.
+    
+    [GUI]
+
+    The simple plotter is available and then PAIDA needs "matplotlib" package (http://matplotlib.sourceforge.net/).
+    Currently PAIDA can plot IHistogram1D, ICloud1D, IProfile1D, IFunction(dimension=1) and IDataPointSet(dimension=2).
+
+    [Style]
+    
+    You can set values. : ILineStyle, IMarkerStyle
+
+    You can set values but there is no effect to the GUI. : IBaseStyle, IPlotterStyle, IDataStyle, IBrushStyle, IInfoStyle, ITextStyle, ITitleStyle, IAxisStyle
+
+    You can not set any value. : IFillStyle
+
+[3.0a1]
+    
+    The first alpha release.

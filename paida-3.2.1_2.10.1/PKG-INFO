@@ -1,0 +1,33 @@
+Metadata-Version: 1.0
+Name: paida
+Version: 3.2.1_2.10.1
+Summary: A pure Python package for the scientific data analysis and plotting
+Home-page: http://paida.sourceforge.net/
+Author: Koji Kishimoto
+Author-email: korry@users.sourceforge.net
+License: Python Software Foundation License
+Description: PAIDA is pure Python scientific analysis package.
+        The main features are:
+        
+        - Pure Python! (so works on both Python and Jython)
+        - AIDA (Abstract Interfaces for Data Analysis) support
+        - Creating/Plotting the histogram, ntuple, profile and cloud
+        - Function fitting (parameter optimization) with constraints and its parabolic and asymmetric errors evaluation
+        - XML based storing
+        - Matrix calculation
+        
+        PAIDA web site:
+        http://paida.sourceforge.net/
+        
+        AIDA project has other implementations like Java (JAIDA), C++ etc. (Open Scientist and Anaphe).
+        For more information about AIDA itself, please refer to
+        http://aida.freehep.org/
+        
+Platform: any
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Python Software Foundation License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Java
+Classifier: Programming Language :: Python
+Classifier: Topic :: Scientific/Engineering

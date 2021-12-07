@@ -1,0 +1,81 @@
+################
+ What is PAIDA?
+################
+
+PAIDA is pure Python scientific analysis package.
+The main features are:
+
+ + Pure Python!
+    ++ Jython (Python in Java) OK!
+ + AIDA (Abstract Interfaces for Data Analysis) support
+ + Creating/Plotting the histogram, ntuple, profile and cloud
+ + Parameter optimization (parameter fitting)
+    ++ you can constrain and/or fix parameters
+    ++ parabolic and asymmetric error evaluation
+    ++ various fitting methods are supported
+ + XML based storing
+
+PAIDA web site:
+http://paida.sourceforge.net/
+
+AIDA  web site:
+http://aida.freehep.org/
+
+AIDA has already both C++ and Java implementations. Many analysis systems such as GEANT4, JAS3, OpenScientist and Anaphe use AIDA.
+
+##############
+ Requirements
+##############
+
+Using with Python :
+    + Python2.3 or later >> http://www.python.org/
+        ++ If tkinter module is enabled, you can use tkinter GUI engine
+            +++ Tix extension etc. do not be needed. Tcl/Tk and X11 only.
+            +++ If use with IPython, it's better that both Tcl/Tk and Tkinter are configured with pthread-enabled.
+            +++ MacOSX users : Tcl/Tk Aqua 8.4.7 or later is recommended.
+        ++ If zlib module is enabled, you can use compressed XML store files.
+
+Using with Jython :
+    + Jython2.1 or later >> http://www.jython.org/
+
+#######
+ Notes
+#######
+
+With Jython2.1, we can not output a zipped XML file because of Jython's limitation. Unzipped XML file is OK.
+
+#########
+ Install
+#########
+
+Using with Python :
+(1) Download the latest paida package.
+(2) Unpack it in any directory you want.
+(3) Move into the unpacked folder and execute "setup.py install".
+
+    For example...
+    >>> gunzip xvfz paida-3.2.1_2.9.tar.gz
+    >>> cd paida-3.2.1_2.9
+    ( >>> su [*1])
+    >>> python setup.py install
+
+    Notes:
+        + [*1] You may need to be a root user depending on the installation directory.
+        + You can move the "paida" folder to your Python's "site-packages" directory.
+
+Using with Jython :
+    + Make sure you have working Jython at first.
+        If not, get it from http://www.jython.org/ 
+        PAIDA works Jython2.1 or later.
+    + Download the latest PAIDA package.
+        from SourceForge download site 
+    + Unpack it in any directory you want.
+    + Move into the unpacked folder.
+    + Copy (or link) "paida" folder to the folder [your Jython folder]/Lib/
+        Currently this is the easiest and safest way but there are other ways to install. Please refer to http://www.jython.org/
+
+##################
+ More information
+##################
+
+http://paida.sourceforge.net/
