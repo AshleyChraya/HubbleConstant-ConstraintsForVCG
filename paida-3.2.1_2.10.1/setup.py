@@ -35,6 +35,7 @@ Topic :: Scientific/Engineering
 
 packages = ['paida',
 	'paida.paida_core',
+	'paida.paida_core.PAbsorber',
 	'paida.paida_gui',
 	'paida.paida_gui.batch',
 	'paida.paida_gui.tkinter',
