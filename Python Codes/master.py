@@ -1,3 +1,4 @@
+from numbers import Integral
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -174,6 +175,7 @@ def GWdata():
             [40.0, 7, -15],
         ]
     )
+
     full_Z_GW = np.array(
         [
             [0.82, 0.28, -0.34],
@@ -231,6 +233,7 @@ def GWdata():
             [0.01, 0.00, -0.00],
         ]
     )
+
     # Number of events
     a = name.size
 
@@ -258,7 +261,7 @@ def GWdata():
         dldata_GW[b] += i[0]
         b += 1
     for i in dldata_GW:
-        dmdata_GW[h] += 5 * np.log(i, 10) + 25
+        dmdata_GW[h] += 5 * np.log10(i) + 25
         h += 1
     for i in full_DL_GW:
         dlUP[c] += i[0] + i[1]
@@ -322,13 +325,13 @@ def GWdata():
     f = h = k = l = m = x = y = p = q = r = s = 0
 
     for i in finaldl:
-        mu[h] += 5 * np.log(i, 10) + 25
+        mu[h] += 5 * np.log10(i) + 25
         h += 1
     for i in finaldlup:
-        dmtop[f] += 5 * np.log(i, 10) + 25
+        dmtop[f] += 5 * np.log10(i) + 25
         f += 1
     for i in finaldllow:
-        dmbottom[k] += 5 * np.log(i, 10) + 25
+        dmbottom[k] += 5 * np.log10(i) + 25
         k += 1
     # upper and lower differences for errors
     for (i, j) in zip(mu, dmtop):
@@ -389,28 +392,13 @@ def likelihood(omega_m, n, H0):
 
         sigma = np.zeros(len(z))
 
-        # DL theoretical from VCG model
-        def D_l(z, omega_m, n, h0):
-            def int_func(x):
-                return 1 / (
-                    pow((1 + x), 2)
-                    * (
-                        omega_r0
-                        + (omega_b0 / (1 + x))
-                        + (
-                            (1 - omega_b0 - omega_r0)
-                            * ((omega_m * (1 + x) ** 6) + (1 - omega_m) * (1 + x) ** n) ** (0.5)
-                            / (1 + x) ** (4)
-                        )
-                    )
-                    ** (0.5)
-                )
+        def mu_th(z):
+            # DL theoretical from VCG model
+            g = quad(integrand, 0, z, args=(omega_m, n))
+            dl = (1 + z) * g[0] * (ckm / H0)
 
-            g = quad(int_func, 0, z)
-            return (1 + z) * g[0] * (ckm / H0)
-
-        # Calculate the value of mu_theory
-        mu_th = 5 * np.log(D_l(z, omega_m, n, H0), 10) + 25
+            # Calculate the value of mu_theory
+            return 5 * np.log10(dl) + 25
 
         # We now defile a likelihood function as given in the notes
         # If the value comes out to be less than zero, set it to a very very small likelyhood
@@ -438,9 +426,9 @@ def likelihood(omega_m, n, H0):
                 loglikely_GW = -1.0e100
             else:
                 for i in range(len(z)):  # (Average of asymetrical errors)
-                    dmu[i] = mu[i] - mu_th
+                    dmu[i] = mu[i] - mu_th(z[i])
                     sigma[i] = (dmbottomerr[i] + dmtoperr[i]) / 2
-                loglikely = -0.5 * np.sum(dmu**2 / sigma**2)
+                loglikely_GW = -0.5 * np.sum(dmu**2 / sigma**2)
 
                 return loglikely_GW
 
@@ -597,7 +585,19 @@ if __name__ == "__main__":
     omega_b0 = 0.0000245
     omega_r0 = 0.02
     ckm = 299792.458
-    H0 = 70
+    H0 = 70.0
     # print(likelihood(omega_m=0.12, n=1.25, H0=70))
-    plot(likelihood)
+    if args.Data in ["pantheon", "gw", "pantheongw"]:
+        mean, sigma = plot(likelihood)
+        datafinal = np.vstack((mean, sigma))
+        myheader = "Mean and 1 sigma of values"
+        np.savetxt(f"{args.Data}_gaussian_cobaya.txt", datafinal, fmt="%16.12e", header=myheader, delimiter=",")
+    else:
+        plot(likelihood)
+    plt.savefig(
+        f"{args.Data}_gaussian_cobaya.pdf",
+        format="pdf",
+        bbox_inches="tight",
+    )
+
     plt.show()
