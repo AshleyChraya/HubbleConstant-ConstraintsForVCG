@@ -1,0 +1,4 @@
+# Minimum chi square, omega_m std dev (1 sigma) and n std dev (1 sigma) values
+5.932062462725e+02
+0.000000000000e+00
+0.000000000000e+00
