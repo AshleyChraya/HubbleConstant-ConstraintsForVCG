@@ -31,6 +31,7 @@ parser.add_argument(
 
 args = parser.parse_args()
 
+
 # Reading SN Pantheon data
 def SNdata():
     # Covariance data
@@ -257,7 +258,7 @@ def GWdata():
         dldata_GW[b] += i[0]
         b += 1
     for i in dldata_GW:
-        dmdata_GW[h] += 5 * log(i, 10) + 25
+        dmdata_GW[h] += 5 * np.log(i, 10) + 25
         h += 1
     for i in full_DL_GW:
         dlUP[c] += i[0] + i[1]
@@ -433,7 +434,7 @@ def likelihood(omega_m, n, H0):
 
         if args.likelihood == "gaussian":
 
-            if omega_m <= 0.0 or omega_m >= 1 or h0 < 0:
+            if omega_m <= 0.0 or omega_m >= 1 or H0 < 0:
                 loglikely_GW = -1.0e100
             else:
                 for i in range(len(z)):  # (Average of asymetrical errors)
@@ -534,8 +535,8 @@ def plot(likelihood):
             legend_loc="upper right",
             line_args=[{"lw": 2, "ls": "--", "color": "red"}, {"lw": 2, "color": "darkblue"}],
             contour_colors=["red", "darkblue"],
-        #     title_limit=1, # first title limit (for 1D plots) is 68% by default
-        #     markers={'h0':0})
+            #     title_limit=1, # first title limit (for 1D plots) is 68% by default
+            #     markers={'h0':0})
         )
 
 
