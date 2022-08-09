@@ -1,15 +1,15 @@
-from numbers import Integral
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-from math import pow
-from scipy.integrate import quad
-from cobaya.run import run
-from getdist.mcsamples import MCSamplesFromCobaya
-import getdist.plots as gdplt
 import argparse  # Commandline input
 from collections import OrderedDict as odict
+from math import pow
+from numbers import Integral
 
+import getdist.plots as gdplt
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from cobaya.run import run
+from getdist.mcsamples import MCSamplesFromCobaya
+from scipy.integrate import quad
 
 plt.rcParams["figure.figsize"] = (20, 18)
 
@@ -363,7 +363,7 @@ def integrand(x, omega_m, n):
 
 def likelihood(omega_m, n, H0):
 
-    if args.Data in ["pantheon", "both", "pantheongw"]:
+    if args.Data in ["pantheon", "pantheongw"]:
 
         zhel, zSNe, muobs, Cinverse, Dstat = SNdata()
 
@@ -384,11 +384,11 @@ def likelihood(omega_m, n, H0):
             loglikely_PS = -1.0e100
         else:
             loglikely_PS = -0.5 * chi2_SNe
+        if args.Data not in ["pantheongw"]:
+            return loglikely_PS
 
-        return loglikely_PS
-
-    if args.Data in ["gw", "both", "pantheongw"]:
-        z, mu, dmbottomerr, dmtoperr = GWdata()
+    if args.Data in ["gw", "pantheongw"]:
+        z, mu, dmbottomerr, dmtoperr = GWdata()  # observational data of GW
 
         sigma = np.zeros(len(z))
 
@@ -406,30 +406,33 @@ def likelihood(omega_m, n, H0):
         dmu = np.empty(len(z))
         if args.likelihood == "nongaussian":
 
-            if omega_m <= 0.0 or omega_m >= 1 or H0 < 0:
+            if omega_m <= 0.0 or omega_m >= 1 or H0 < 0 or n > 4:
                 loglikely_GW = -1.0e100
             else:
                 for i in range(len(z)):  # if data point lower than theoretical: take bottom error
                     # if data point above th : take upper error
-                    dmu[i] = mu[i] - mu_th
+                    dmu[i] = mu[i] - mu_th(z[i])
                     if dmu[i] > 0:
                         sigma[i] = dmbottomerr[i]
                     else:
                         sigma[i] = dmtoperr[i]
                 loglikely_GW = -0.5 * np.sum(dmu**2 / sigma**2)
 
+            if args.Data not in ["pantheongw"]:
                 return loglikely_GW
 
         if args.likelihood == "gaussian":
 
-            if omega_m <= 0.0 or omega_m >= 1 or H0 < 0:
+            if omega_m <= 0.0 or omega_m >= 1 or H0 < 0 or n > 4:
                 loglikely_GW = -1.0e100
             else:
                 for i in range(len(z)):  # (Average of asymetrical errors)
                     dmu[i] = mu[i] - mu_th(z[i])
                     sigma[i] = (dmbottomerr[i] + dmtoperr[i]) / 2
-                loglikely_GW = -0.5 * np.sum(dmu**2 / sigma**2)
 
+                loglikely_GW = -0.5 * np.sum(dmu**2 / sigma**2)
+            
+            if args.Data not in ["pantheongw"]:
                 return loglikely_GW
 
     if args.Data == "pantheongw":
@@ -591,11 +594,13 @@ if __name__ == "__main__":
         mean, sigma = plot(likelihood)
         datafinal = np.vstack((mean, sigma))
         myheader = "Mean and 1 sigma of values"
-        np.savetxt(f"{args.Data}_gaussian_cobaya.txt", datafinal, fmt="%16.12e", header=myheader, delimiter=",")
+        np.savetxt(
+            f"{args.Data}_{args.likelihood}_cobaya.txt", datafinal, fmt="%16.12e", header=myheader, delimiter=","
+        )
     else:
         plot(likelihood)
     plt.savefig(
-        f"{args.Data}_gaussian_cobaya.pdf",
+        f"{args.Data}_{args.likelihood}_cobaya.pdf",
         format="pdf",
         bbox_inches="tight",
     )
