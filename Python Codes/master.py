@@ -1,7 +1,6 @@
 import argparse  # Commandline input
 from collections import OrderedDict as odict
 from math import pow
-from numbers import Integral
 
 import getdist.plots as gdplt
 import matplotlib.pyplot as plt
