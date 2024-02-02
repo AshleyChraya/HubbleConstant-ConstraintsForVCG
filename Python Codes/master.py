@@ -430,7 +430,7 @@ def likelihood(omega_m, n, H0):
                     sigma[i] = (dmbottomerr[i] + dmtoperr[i]) / 2
 
                 loglikely_GW = -0.5 * np.sum(dmu**2 / sigma**2)
-            
+
             if args.Data not in ["pantheongw"]:
                 return loglikely_GW
 
@@ -441,7 +441,7 @@ def likelihood(omega_m, n, H0):
 
 def mcmc(likelihood):
 
-    guess = [0.3, 1.2, 70]
+    guess = [0.1, 1.2, 70]
     omega_m, n, H0 = guess
     sigma = 5
     parameters = ["omega_m", "n", "H0"]
@@ -470,7 +470,7 @@ def mcmc(likelihood):
             [
                 "H0",
                 {
-                    "prior": {"dist": "norm", "loc": 70.4, "scale": sigma * 69.8},
+                    "prior": {"dist": "norm", "loc": 73.040, "scale": sigma * 1.040},
                     "ref": H0,
                     "latex": r"H_0",
                     "proposal": 0.001,
@@ -598,6 +598,7 @@ if __name__ == "__main__":
         )
     else:
         plot(likelihood)
+
     plt.savefig(
         f"{args.Data}_{args.likelihood}_cobaya.pdf",
         format="pdf",

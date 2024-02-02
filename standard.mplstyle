@@ -24,7 +24,7 @@ ytick.direction:     in
 ytick.right : True
 figure.figsize:     6,4
 text.usetex:   True
-font.size: 20
+font.size: 12
 font.family: Times
 
 
